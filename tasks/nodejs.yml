@@ -1,0 +1,5 @@
+# NODEJS
+# ====================================================
+
+- name: install nodejs
+  action: apt name=nodejs

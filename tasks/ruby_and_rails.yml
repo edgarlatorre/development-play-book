@@ -1,0 +1,31 @@
+# RUBY
+- name: download ruby
+  get_url: url=http://cache.ruby-lang.org/pub/ruby/2.1/{{ ruby }}.tar.gz dest=/tmp/{{ ruby }}.tar.gz
+
+- name: extract ruby
+  command: chdir=/tmp/ tar zxvf {{ ruby }}.tar.gz creates=/tmp/{{ ruby }}
+
+- name: configure ruby
+  command: chdir=/tmp/{{ ruby }}/ ./configure
+
+- name: make ruby
+  command: chdir=/tmp/{{ ruby }}/ make
+
+- name: install ruby
+  command: chdir=/tmp/{{ ruby }}/ make install
+
+#RAILS
+- name: create directory for local gem
+ sudo: no
+ command: mkdir $HOME/.gems
+
+- name: export GEM_PATH
+ sudo: no
+ command: export GEM_PATH=$HOME/.gems
+
+- name: export PATH
+ sudo: no
+ command: export PATH=$PATH:$GEM_PATH/bin
+
+- name: install rails
+  command: gem install rails --no-rdoc --no-ri
